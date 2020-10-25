@@ -1,0 +1,17 @@
+1.petitioner table
+CREATE TABLE petitioner ( petitioner_id int NOT null UNIQUE, first_name varchar(20), middle_name varchar(20), last_name varchar(20), father_name varchar(40), gender varchar(10), nid int, age int, contact_no int, state varchar(20), city varchar(10), street_no int, house_no int, PRIMARY KEY (petitioner_id) )
+
+2.victim
+CREATE TABLE victim( victim_id int NOT null UNIQUE, first_name varchar(20), middle_name varchar(20), last_name varchar(20), father_name varchar(20), nid int, gender varchar(10), age int, contact_no int, victim_condition text, state varchar(10), city varchar(10), street_no int, house_no int, PRIMARY KEY (victim_id) )
+
+3. fir
+CREATE TABLE FIR ( FIR_no int not null UNIQUE, petitioner_id int NOT null, victim_id int NOT null, petitioner_name varchar(30), victim_name varchar(30), date_file date, time_filled timestamp, date_incident date, time_incident time, place_incident varchar(20), accused_name varchar(30), accused_id int, PRIMARY KEY (FIR_no), FOREIGN KEY (petitioner_id) REFERENCES petitioner(petitioner_id), FOREIGN KEY (victim_id) REFERENCES victim(victim_id), FOREIGN KEY (accused_id) REFERENCES accused(accused_id) )
+
+4.accused
+CREATE TABLE accused ( accused_id int not null UNIQUE, lockup_id int not null, accused_name varchar(30), gender varchar(10), age int, status text, contact_no int, state varchar(20), city varchar(20), street_no int, house_no int, photo blob, PRIMARY KEY (accused_id) )
+
+5.invest offi
+CREATE TABLE investigation_officer ( io_id int not null UNIQUE, io_name varchar(30), gender varchar(10), contact_no int, rank int, date_of_hire date, PRIMARY KEY (io_id) )
+
+6.case
+CREATE TABLE cases( case_id int not null, io_id int, fir_no int, other_details text, case_status text, PRIMARY KEY (case_id), FOREIGN KEY(io_id)REFERENCES investigation_officer(io_id), FOREIGN KEY (fir_no) REFERENCES fir(FIR_no) )
